@@ -1,15 +1,20 @@
 package com.example.foodkorner
 
-// RecipeAdapter.kt
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class RecipeAdapter(private val recipes: List<Recipe>) :
-    RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
+class RecipeAdapter(
+    private val recipes: List<Recipe>,
+    private val listener: OnItemClickListener
+) : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
+
+    // Interface for item click listener
+    interface OnItemClickListener {
+        fun onRecipeClick(recipe: Recipe)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -20,6 +25,12 @@ class RecipeAdapter(private val recipes: List<Recipe>) :
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         val recipe = recipes[position]
         holder.bind(recipe)
+
+        // Set click listener on the item view
+        holder.itemView.setOnClickListener {
+            // Invoke the onRecipeClick method of the listener
+            listener.onRecipeClick(recipe)
+        }
     }
 
     override fun getItemCount(): Int = recipes.size
