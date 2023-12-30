@@ -18,6 +18,8 @@ class RecipeListActivity : AppCompatActivity() {
         adapter = RecipeAdapter(getDummyRecipeList()) // Replace with actual data
         recipeList.layoutManager = LinearLayoutManager(this)
         recipeList.adapter = adapter
+
+
     }
 
     private fun getDummyRecipeList(): List<Recipe> {
